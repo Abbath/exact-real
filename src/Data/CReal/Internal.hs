@@ -378,7 +378,7 @@ instance KnownNat n => RealFloat (CReal n) where
   encodeFloat m n = if n <= 0
     then fromRational (m % bit (negate n))
     else fromRational (unsafeShiftL m n :% 1)
-  exponent = error "Data.CReal.Internal exponent"
+  exponent _ = 0
   significand = error "Data.CReal.Internal significand"
   scaleFloat = flip shiftL
   isNaN _ = False
