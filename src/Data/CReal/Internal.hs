@@ -371,7 +371,7 @@ instance KnownNat n => RealFrac (CReal n) where
 -- quadrant at precision p. This can cause atan2 to be slightly slower than atan
 instance KnownNat n => RealFloat (CReal n) where
   floatRadix _ = 2
-  floatDigits _ = error "Data.CReal.Internal floatDigits"
+  floatDigits = crealPrecision
   floatRange _ = error "Data.CReal.Internal floatRange"
   decodeFloat x = let p = crealPrecision x
                   in (x `atPrecision` p, -p)
@@ -379,7 +379,7 @@ instance KnownNat n => RealFloat (CReal n) where
     then fromRational (m % bit (negate n))
     else fromRational (unsafeShiftL m n :% 1)
   exponent _ = 0
-  significand = error "Data.CReal.Internal significand"
+  significand = id
   scaleFloat = flip shiftL
   isNaN _ = False
   isInfinite _ = False
